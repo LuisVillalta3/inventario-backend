@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\ProductsController;
 use App\Http\Controllers\Api\V1\ProvidersController;
 use App\Http\Controllers\Api\V1\UsersController;
+use App\Http\Controllers\Api\V1\WarehousesController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,7 +22,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->group(function () {
     Route::resource('proveedores', ProvidersController::class)->except(['create', 'edit']);
     Route::resource('usuarios', UsersController::class)->except(['create', 'edit', 'destroy']);
-    Route::resource('bodegas', UsersController::class)->except(['create', 'edit']);
+    Route::resource('bodegas', WarehousesController::class)->except(['create', 'edit']);
     Route::resource('productos', ProductsController::class)->except(['create', 'edit']);
 });
 

@@ -16,7 +16,7 @@ class WarehousesController extends BaseController
     {
         $Warehouses = Warehouse::all();
 
-        return $this->sendResponse(WarehouseResource::collection($Warehouses), 'Proveedores retrieved Successfully.');
+        return $this->sendResponse(WarehouseResource::collection($Warehouses), 'bodegas retrieved Successfully.');
     }
 
     /**
