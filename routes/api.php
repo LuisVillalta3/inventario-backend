@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\ProvidersController;
+use App\Http\Controllers\Api\V1\UsersController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,7 +18,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('auth:api')->group(function () {
-    Route::resource('proveedores', ProvidersController::class);
+    Route::resource('proveedores', ProvidersController::class)->except(['create', 'edit']);
+    Route::resource('usuarios', UsersController::class)->except(['create', 'edit', 'destroy']);
 });
 
 Route::post('register', [AuthController::class, 'register'])->name('register');
