@@ -25,19 +25,25 @@ class UsersController extends BaseController
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'idProveedor' => 'required',
             'nombre' => 'required',
+            'email' => 'required|email',
+            'dui' => 'required|string',
+            'fecha_contratacion' => 'required',
             'direccion' => 'required',
             'telefono' => 'required',
-            'fax' => 'nullable|string',
-            'email' => 'required|email',
+            'password' => 'required',
+            'c_password' => 'required|same:password',
         ]);
 
         if ($validator->fails()) {
             return $this->sendError('Validation Error.', $validator->errors());
         }
 
-        $User = User::create($request->all());
+        $User = User::create([
+            ...$request->all(),
+            'password' => bcrypt($request->password),
+            'name' => $request->nombre,
+        ]);
 
         return $this->sendResponse(new UserResource($User), 'Proveedor created successfully.');
     }

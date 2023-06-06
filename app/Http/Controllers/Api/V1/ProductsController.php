@@ -29,6 +29,7 @@ class ProductsController extends BaseController
             'nombre' => 'required',
             'descripcion' => 'required',
             'id_proveedor' => 'required',
+
         ]);
 
         if ($validator->fails()) {
@@ -45,12 +46,12 @@ class ProductsController extends BaseController
      */
     public function show($producto)
     {
-        $producto= Product::find($producto);
-        if (is_null($producto) {
+        $producto = Product::find($producto);
+        if (is_null($producto)) {
             return $this->sendError('productonot found.');
         }
 
-        return $this->sendResponse(new ProductResource($producto, 'productoretrieved successfully.');
+        return $this->sendResponse(new ProductResource($producto, 'productoretrieved successfully.'));
     }
 
     /**
@@ -63,6 +64,7 @@ class ProductsController extends BaseController
             'nombre' => 'required',
             'descripcion' => 'required',
             'id_proveedor' => 'required',
+
         ]);
 
         if ($validator->fails()) {
@@ -85,13 +87,13 @@ class ProductsController extends BaseController
      */
     public function destroy($producto)
     {
-        $producto= Product::find($producto);
+        $producto = Product::find($producto);
 
-        if (is_null($producto) {
+        if (is_null($producto)) {
             return $this->sendError('productonot found.');
         }
 
-        $producto>delete();
+        $producto->delete();
 
         return $this->sendResponse([], 'productodeleted successfully.');
     }
