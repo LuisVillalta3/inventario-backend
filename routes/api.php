@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->group(function () {
     Route::resource('proveedores', ProvidersController::class)->except(['create', 'edit']);
     Route::resource('usuarios', UsersController::class)->except(['create', 'edit', 'destroy']);
+    Route::resource('bodegas', UsersController::class)->except(['create', 'edit']);
 });
 
 Route::post('register', [AuthController::class, 'register'])->name('register');
