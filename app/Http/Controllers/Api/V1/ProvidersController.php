@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Models\Provider;
 use Illuminate\Http\Request;
 use App\Http\Resources\Provider as ProviderResource;
+use Validator;
 
 class ProvidersController extends BaseController
 {
@@ -15,15 +16,7 @@ class ProvidersController extends BaseController
     {
         $providers = Provider::all();
 
-        return $this->sendResponse(ProviderResource::collection($providers), 'Products Retrieved Successfully.');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return $this->sendResponse(ProviderResource::collection($providers), 'Proveedores retrieved Successfully.');
     }
 
     /**
@@ -31,38 +24,79 @@ class ProvidersController extends BaseController
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'idProveedor' => 'required',
+            'nombre' => 'required',
+            'direccion' => 'required',
+            'telefono' => 'required',
+            'fax' => 'nullable|string',
+            'email' => 'required|email',
+        ]);
+
+        if ($validator->fails()) {
+            return $this->sendError('Validation Error.', $validator->errors());
+        }
+
+        $provider = Provider::create($request->all());
+
+        return $this->sendResponse(new ProviderResource($provider), 'Proveedor created successfully.');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Provider $provider)
+    public function show($proveedore)
     {
-        //
-    }
+        $proveedor = Provider::find($proveedore);
+        if (is_null($proveedor)) {
+            return $this->sendError('Proveedor not found.');
+        }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Provider $provider)
-    {
-        //
+        return $this->sendResponse(new ProviderResource($proveedor), 'Proveedor retrieved successfully.');
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Provider $provider)
+    public function update(Request $request, $proveedore)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'idProveedor' => 'required',
+            'nombre' => 'required',
+            'direccion' => 'required',
+            'telefono' => 'required',
+            'fax' => 'nullable|string',
+            'email' => 'required|email',
+        ]);
+
+        if ($validator->fails()) {
+            return $this->sendError('Validation Error.', $validator->errors());
+        }
+
+        $provider = Provider::find($proveedore);
+
+        if (is_null($provider)) {
+            return $this->sendError('Proveedor not found.');
+        }
+
+        $provider->update($request->all());
+
+        return $this->sendResponse(new ProviderResource($provider), 'Proveedor created successfully.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Provider $provider)
+    public function destroy($proveedore)
     {
-        //
+        $proveedor = Provider::find($proveedore);
+
+        if (is_null($proveedor)) {
+            return $this->sendError('Proveedor not found.');
+        }
+
+        $proveedor->delete();
+
+        return $this->sendResponse([], 'Proveedor deleted successfully.');
     }
 }
