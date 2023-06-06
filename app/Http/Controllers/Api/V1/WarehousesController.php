@@ -25,12 +25,12 @@ class WarehousesController extends BaseController
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'idProveedor' => 'required',
+            'code' => 'required',
             'nombre' => 'required',
             'direccion' => 'required',
             'telefono' => 'required',
             'fax' => 'nullable|string',
-            'email' => 'required|email',
+            'disponible' => 'required|boolean',
         ]);
 
         if ($validator->fails()) {
@@ -61,7 +61,7 @@ class WarehousesController extends BaseController
     public function update(Request $request, $proveedore)
     {
         $validator = Validator::make($request->all(), [
-            'idProveedor' => 'required',
+            'code' => 'required',
             'nombre' => 'required',
             'direccion' => 'required',
             'telefono' => 'required',

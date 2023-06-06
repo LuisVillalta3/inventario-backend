@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\V1\AuthController;
+use App\Http\Controllers\Api\V1\ProductsController;
 use App\Http\Controllers\Api\V1\ProvidersController;
 use App\Http\Controllers\Api\V1\UsersController;
 use Illuminate\Http\Request;
@@ -21,6 +22,7 @@ Route::middleware('auth:api')->group(function () {
     Route::resource('proveedores', ProvidersController::class)->except(['create', 'edit']);
     Route::resource('usuarios', UsersController::class)->except(['create', 'edit', 'destroy']);
     Route::resource('bodegas', UsersController::class)->except(['create', 'edit']);
+    Route::resource('productos', ProductsController::class)->except(['create', 'edit']);
 });
 
 Route::post('register', [AuthController::class, 'register'])->name('register');
